@@ -19,7 +19,7 @@
     <!-- TODO: Add banner or toast message for failed form submission -->
 
     <div id="modal" 
-    x-data="{contact: {type:{telephone:false,face:false},{reason:''},{ok:{yes:false,no:false}},{details:''}}}">
+    x-data="{abc:'' }">
       <form @submit.prevent="console.log('submitted')">
         <fieldset>
             <span xtext="datePickerValue"></span>
@@ -294,14 +294,15 @@
                 <option>Check-in</option>
                 <option>Other</option>
               </select>
+
             </div>
-            <div id="client-ok" x-show="contact.reason!='Confirm Client OK'">
+            <div id="client-ok">
               Client OK?
               <label for="client-ok-yes">Yes</label>
               <input
                 type="radio"
                 id="client-ok-yes"
-                x-model="client-ok-yes"
+                x-model="client.ok.yes.boolean"
                 name="client-ok"
                 value="True"
               />
@@ -310,14 +311,14 @@
               <input
                 type="radio"
                 id="client-ok-no"
-                x-model="client-ok-no"
+                x-model="client.ok.no.boolean"
                 name="client-ok"
                 value="False"
               />
             </div> 
           <div id="contact-details">
             <div class="w-full max-w-x mx-auto">
-              <textarea
+              <textarea :disabled="client.ok.yes"
               x-model="contact.details"
                 x-data="{ 
                 resize () { 

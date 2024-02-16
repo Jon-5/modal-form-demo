@@ -11,10 +11,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- TODO: Development environment. Generate optimized bundles of CSS and JS for Production setting -->
   </head>
-  <body class="bg-gray-100"> 
+  <body class="bg-gray-100">
     <div x-data="{contact: {type:'testing'}}">
-        <span x-text="contact.type"></span>
-        <input type="text" x-model="contact.type">
+      <span x-text="contact.type"></span>
+      <input type="text" x-model="contact.type" />
+      <div x-show="contact.type=='testing'">Is this visible?</div>
     </div>
-    </body>
-    </html>
+  </body>
+</html>
