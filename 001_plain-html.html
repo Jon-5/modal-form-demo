@@ -1,0 +1,90 @@
+<html>
+  <head></head>
+  <body>
+    <form action="api/encounter/submit" method="post">
+      <table>
+        <tr>
+          <td>
+            <label>
+              Date of Contact
+              <input type="date" name="date-picker" id="datePicker"
+            /></label>
+            <script>
+              document.getElementById("datePicker").valueAsDate = new Date();
+            </script>
+          </td>
+          <td align="right">
+            Contact Type
+
+            <label
+              ><input
+                type="radio"
+                name="contact-type"
+                value="telephone"
+              />Telephone</label
+            >
+
+            <label
+              ><input
+                type="radio"
+                name="contact-type"
+                value="face-to-face"
+              />Face to Face</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <label>
+              Contact Reason:
+              <select name="contact-reason">
+                <option></option>
+                <option>Confirm Client OK</option>
+                <option>Requested by Client</option>
+                <option>GDPR Data Request</option>
+                <option>GDPR|RTBF</option>
+                <option>Life Event</option>
+                <option>Check-in</option>
+                <option>Other</option>
+              </select>
+            </label>
+          </td>
+        </tr>
+
+        <tr colspan="2">
+          <td>
+            Client OK?
+            <label>
+              <input type="radio" name="client-ok" value="True" />Yes</label
+            >
+            <label>
+              <input type="radio" name="client-ok" value="False" />No</label
+            >
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2">
+            <label>
+              Contact Details
+              <textarea
+                name="contact-details"
+                placeholder="Details"
+                cols="80"
+                rows="10"
+              ></textarea>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">
+            <input type="reset" value="Cancel" />
+          </td>
+          <td align="center">
+            <input type="submit" value="Save" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>
