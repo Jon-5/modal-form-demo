@@ -19,7 +19,9 @@
     <!-- TODO: Add banner or toast message for failed form submission -->
 
     <div id="modal" 
-    x-data="{abc:'' }">
+    x-data="{contact.reason:'' }" x-init="$watch('$store.alpineStore.name', function (val) {
+    console.log(val);
+})">
       <form @submit.prevent="console.log('submitted')">
         <fieldset>
             <span xtext="datePickerValue"></span>
@@ -337,6 +339,7 @@
 
           <div id="cancel"><button type="reset">Cancel</button></div>
           <div id="save"><button type="submit">Submit</button></div>
+          <span x-text="contact.reason"></span>
         </fieldset>
       </form>
     </div>
