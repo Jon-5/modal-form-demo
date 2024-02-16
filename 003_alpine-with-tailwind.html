@@ -15,7 +15,7 @@
     <!-- TODO: Integrate with template engine, for purpose of readability/maintainability and internationalization. Alternatively, stash the code into js files that are imported dynamically. -->
     <!-- INPROGRESS: Implement stylized form components. Note: further code needed to match benefits of native browser components, like keyboard navigation-->
 
-    <div id="modal">
+    <div id="modal" x-data>
       <form action="/save" method="post">
         <fieldset>
           <div
@@ -256,38 +256,16 @@
             </div>
           </div>
 
-          <div id="contact-type" class="my-10">
-            <h4 class="my-2 text-lg text-gray-700 font-medium">Contact Type</h4>
-            <div class="border rounded-t p-3 flex justify-center">
-              <div class="w-max flex">
-                <label class="text-gray-700 my-1 flex items-center mr-4">
-                  <input
-                    type="radio"
-                    name="contact-type"
-                    value="telephone"
-                    class="mr-2 w-4 h-4"
-                    checked
-                  />
-                  <span>Telephone</span>
-                </label>
-                <label class="text-gray-700 my-1 flex items-center mr-4">
-                  <input
-                    type="radio"
-                    name="contact-type"
-                    value="face-to-face"
-                    class="mr-2 w-4 h-4"
-                  />
-                  <span>Face to Face</span>
-                </label>
-              </div>
-            </div>
+          <div id="contact-type">
           </div>
-          <div id="contact-reason"></div>
-          <div id="client-ok"></div>
+          <div id="contact-reason">
+          </div>
+
+          <div id="client-ok" x-show=""></div>
           <div id="contact-details"></div>
 
           <div id="cancel"></div>
-          <div id="save"></div>
+          <div id="save"><button type="submit">save</button></div>
         </fieldset>
       </form>
     </div>
