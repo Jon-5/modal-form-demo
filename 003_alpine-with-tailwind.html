@@ -2,7 +2,8 @@
   <head>
     <title>Alpine with Tailwind</title>
     <style>
-      [x-cloak] {
+      [x-cloa'submitted'
+            x-model=""datePickerValuek] {
         display: none;
       }
     </style>
@@ -14,12 +15,17 @@
     <!-- TODO: Scaling across device sizes -->
     <!-- TODO: Integrate with template engine, for purpose of readability/maintainability and internationalization. Alternatively, stash the code into js files that are imported dynamically. -->
     <!-- INPROGRESS: Implement stylized form components. Note: further code needed to match benefits of native browser components, like keyboard navigation-->
+    <!-- TODO: Include reactive validation hints: border, color, icons, nearby messages.-->
+    <!-- TODO: Add banner or toast message for failed form submission -->
 
-    <div id="modal" x-data>
-      <form action="/save" method="post">
+    <div id="modal" 
+    x-data="{contact: {type:{telephone:false,face:false},{reason:''},{ok:{yes:false,no:false}},{details:''}}}">
+      <form @submit.prevent="console.log('submitted')">
         <fieldset>
+            <span xtext="datePickerValue"></span>
           <div
             id="date-picker"
+            x-model="datePickerValue"
             x-data="{
       datePickerOpen: false,
       datePickerValue: '',
@@ -256,16 +262,80 @@
             </div>
           </div>
 
-          <div id="contact-type">
-          </div>
-          <div id="contact-reason">
+            <div>
+              Contact Type
+              <label for="contact-type-telephone">Telephone</label
+              ><input
+                type="radio"
+                id="contact-type-telephone"
+                x-model="contact.type.telephone"
+                name="contact-type"
+                value="telephone"
+              />
+
+              <label for="contact-type-face">Face to Face</label
+              ><input
+                type="radio"
+                id="contact-type-face"
+                x-model="contact.type.face"
+                name="contact-type"
+                value="face-to-face"
+              />
+            </div>
+            <div>
+              <label for="contact-reason"> Contact Reason: </label>
+              <select id="contact-reason" x-model="contact.reason" name="contact-reason">
+                <option></option>
+                <option>Confirm Client OK</option>
+                <option>Requested by Client</option>
+                <option>GDPR Data Request</option>
+                <option>GDPR|RTBF</option>
+                <option>Life Event</option>
+                <option>Check-in</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div id="client-ok" x-show="contact.reason!='Confirm Client OK'">
+              Client OK?
+              <label for="client-ok-yes">Yes</label>
+              <input
+                type="radio"
+                id="client-ok-yes"
+                x-model="client-ok-yes"
+                name="client-ok"
+                value="True"
+              />
+
+              <label for="client-ok-no">No</label>
+              <input
+                type="radio"
+                id="client-ok-no"
+                x-model="client-ok-no"
+                name="client-ok"
+                value="False"
+              />
+            </div> 
+          <div id="contact-details">
+            <div class="w-full max-w-x mx-auto">
+              <textarea
+              x-model="contact.details"
+                x-data="{ 
+                resize () { 
+                    $el.style.height = '0px'; 
+                    $el.style.height = $el.scrollHeight + 'px' 
+                } 
+            }"
+                x-init="resize()"
+                @input="resize()"
+                type="text"
+                placeholder="Type your description here"
+                class="flex w-full h-auto min-h-[80px] px-3 py-2 text-sm bg-white border rounded-md border-neutral-300 ring-offset-background placeholder:text-neutral-400 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50"
+              ></textarea>
+            </div>
           </div>
 
-          <div id="client-ok" x-show=""></div>
-          <div id="contact-details"></div>
-
-          <div id="cancel"></div>
-          <div id="save"><button type="submit">save</button></div>
+          <div id="cancel"><button type="reset">Cancel</button></div>
+          <div id="save"><button type="submit">Submit</button></div>
         </fieldset>
       </form>
     </div>
