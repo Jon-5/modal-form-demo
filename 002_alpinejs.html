@@ -1,0 +1,97 @@
+<html>
+  <head>
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@latest/dist/cdn.min.js"
+    ></script>
+  </head>
+  <body>
+    <div
+      x-data="{ showModal: true }"
+      @keydown.window.escape="showModal = false"
+    >
+      <button @click="showModal = !showModal">Toggle Modal</button>
+
+      <div x-cloak x-transition x-show="showModal">
+        <form
+          id="form"
+          name="form"
+          x-data
+          x-ref="form"
+          @submit="console.log('Submitting form')"
+          action="/api-mock-call/ClientContactForm="
+        >
+          <fieldset>
+            <div>
+              <label for="date-picker">Date of Contact</label>
+              <input type="date" id="date-picker" name="date-picker" />
+            </div>
+            <div>
+              Contact Type
+              <label for="contact-type-telephone">Telephone</label
+              ><input
+                type="radio"
+                id="contact-type-telephone"
+                name="contact-type"
+                value="telephone"
+              />
+
+              <label for="contact-type-face">Face to Face</label
+              ><input
+                type="radio"
+                id="contact-type-face"
+                name="contact-type"
+                value="face-to-face"
+              />
+            </div>
+            <div>
+              <label for="contact-reason"> Contact Reason: </label>
+              <select id="contact-reason" name="contact-reason">
+                <option></option>
+                <option>Confirm Client OK</option>
+                <option>Requested by Client</option>
+                <option>GDPR Data Request</option>
+                <option>GDPR|RTBF</option>
+                <option>Life Event</option>
+                <option>Check-in</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              Client OK?
+              <label for="client-ok-yes">Yes</label>
+              <input
+                type="radio"
+                id="client-ok-yes"
+                name="client-ok"
+                value="True"
+              />
+
+              <label for="client-ok-no">No</label>
+              <input
+                type="radio"
+                id="client-ok-no"
+                name="client-ok"
+                value="False"
+              />
+            </div>
+            <div>
+              <label for="contact-details"> Contact Details</label>
+              <textarea
+                id="contact-details"
+                name="contact-details"
+                placeholder="Details"
+                cols="80"
+                rows="10"
+              ></textarea>
+            </div>
+            <div>
+              <button type="reset">Cancel</button>
+              <button type="submit">Save</button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
