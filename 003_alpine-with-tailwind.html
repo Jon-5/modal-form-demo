@@ -1,12 +1,7 @@
 <html>
   <head>
     <title>Alpine with Tailwind</title>
-    <style>
-      [x-cloa'submitted'
-            x-model=""datePickerValuek] {
-        display: none;
-      }
-    </style>
+
     <script src="https://unpkg.com/alpinejs" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- TODO: Development environment. Generate optimized bundles of CSS and JS for Production setting -->
@@ -268,7 +263,7 @@
               ><input
                 type="radio"
                 id="contact-type-telephone"
-                x-model="contact.type.telephone"
+                x-model="contact.type"
                 name="contact-type"
                 value="telephone"
               />
@@ -277,9 +272,9 @@
               ><input
                 type="radio"
                 id="contact-type-face"
-                x-model="contact.type.face"
+                x-model="contact.type"
                 name="contact-type"
-                value="face-to-face"
+                value="faceToFace"
               />
             </div>
             <div>
