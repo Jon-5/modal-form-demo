@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Alpine with Tailwind</title>
+
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <form x-data="ContactLog()" @submit.prevent="submitForm()">
+      <fieldset>
+        <div>
+          <!-- date given as "YYYY-MM-DD" by default -->
+          <label for="datePicker">Date of Contact</label>
+          <input type="date" id="datePicker" x-model="form.date" />
+        </div>
+
+        <div>
+          Contact Type
+          <label for="typeTelephone">Telephone</label
+          ><input
+            type="radio"
+            x-model="form.type"
+            name="typeTelephone"
+            value="telephone"
+          />
+
+          <label for="typeFace">Face to Face</label
+          ><input
+            type="radio"
+            x-model="form.type"
+            name="typeFace"
+            value="faceToFace"
+          />
+        </div>
+      </fieldset>
+      <fieldset>
+        <label for="reason">Contact Reason: </label>
+        <select
+          x-model="form.reason"
+          @change="form.clientOk='no';form.details=''"
+          name="reason"
+        >
+          <option></option>
+          <option>Confirm Client OK</option>
+          <option>Requested by Client</option>
+          <option>GDPR Data Request</option>
+          <option>GDPR|RTBF</option>
+          <option>Life Event</option>
+          <option>Check-in</option>
+          <option>Other</option>
+        </select>
+      </fieldset>
+      <fieldset x-show="form.reason=='Confirm Client OK'" x-transition:start>
+        Client OK?
+        <label for="yes">Yes</label>
+        <input
+          default
+          type="radio"
+          @change="form.details=''"
+          x-model="form.clientOk"
+          name="clientOk"
+          value="yes"
+        />
+
+        <label for="client-ok-no">No</label>
+        <input
+          type="radio"
+          x-model="form.clientOk"
+          name="clientOk"
+          value="no"
+        />
+      </fieldset>
+      <fieldset>
+        <!-- Stylized with Tailwind CSS -->
+        <div class="w-full max-w-x mx-auto">
+          <textarea
+            :disabled="form.reason=='' || form.clientOk=='yes'"
+            name="description"
+            x-model="form.details"
+            x-data="{ 
+                resize () { 
+                    $el.style.height = '0px'; 
+                    $el.style.height = $el.scrollHeight + 'px' 
+                } 
+            }"
+            x-init="resize()"
+            @input="resize()"
+            type="text"
+            placeholder="Type your description here"
+            class="flex w-full h-auto min-h-[80px] px-3 py-2 text-sm bg-white border rounded-md border-neutral-300 ring-offset-background placeholder:text-neutral-400 focus:border-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50"
+          ></textarea>
+        </div>
+      </fieldset>
+      <fieldset id="buttons">
+        <button type="reset">Cancel</button>
+        <button type="submit">Submit</button>
+        <div x-text="message"></div>
+      </fieldset>
+    </form>
+
+    <!-- Choosing to always submit a value for form.clientOk, although it only has meaning when form.reason=='Confirm Client OK' -->
+    <script>
+      function ContactLog() {
+        const API_URL = "0.0.0.0/api/contactLog"
+        return {
+          form: {
+            date: "",
+            type: "",
+            reason: "",
+            clientOk: "no",
+            description: "",
+          },
+          message:'',
+          submitFormConsole() {
+            console.log(JSON.stringify(this.form));
+          },
+          submitForm(){
+            this.message = "";
+            fetch(API_URL, {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                    Accept:"application/json",
+                },
+                body: JSON.stringify(this.form),
+            }).then(()=>{
+                this.form.date = "";
+                this.form.type = "";
+                this.form.reason = "";
+                this.form.clientOk = "no";
+                this.form.description = "";
+                this.message = "Form successfully submitted.";
+            }).catch( ()=> {
+                this.message = "An error has occured when attempting to submit the form";
+            })
+          }
+          
+        };
+      }
+    </script>
+  </body>
+</html>
